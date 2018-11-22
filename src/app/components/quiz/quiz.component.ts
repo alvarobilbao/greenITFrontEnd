@@ -51,7 +51,7 @@ export class QuizComponent implements OnInit {
   }
 
   onTextFieldChange(field) {
-    // console.log(field.value);
+    console.log(field.value);
     this.textFieldAnswer = field.value;
   }
 }
