@@ -11,10 +11,11 @@
 	</table>
 	
 	<div *ngFor="let choice of currentQuestion.choices;">
-				<input type="radio" name="{{currentQuestion.id}}" value="{{choice.text}}">
+				<input type="radio" name="{{currentQuestion.id}}" [value]="choice.text" (change)="onChoiceChange(choice)">
 				<label>{{choice.text}}</label> 
 	</div>
 </div>
 <div>
-	<button (click)="nextQuestion()">Next</button>
+	<!-- How to retrieve the selected choice-->
+	<button (click)="nextQuestion(answer)">Next</button>
 </div>

@@ -13,7 +13,7 @@ export class QuizComponent implements OnInit {
   currentQuestion: Question;
   currentQuestionId: number;
   currentQuestionIndex: number;
-  answer: any;
+  answer: string;
   constructor(private questionService: JsonquestionService) { }
 
   ngOnInit() {
@@ -26,9 +26,12 @@ export class QuizComponent implements OnInit {
     });
   }
 
+  // TODO navigate through the subquestions
+  // TODO create the answers array;
+  // TODO add the logic to skip questions when needed
   nextQuestion() {
     const questionId = this.currentQuestionId;
-    if (questionId === 4 && this.answer === 'No') {
+    if (questionId === 4) {
       this.currentQuestionId = 12;
     } else {
       this.currentQuestionId++;
@@ -40,5 +43,9 @@ export class QuizComponent implements OnInit {
         break;
       }
     }
+  }
+  onChoiceChange(choice) {
+    this.answer = choice;
+    console.log('choice', choice);
   }
 }
