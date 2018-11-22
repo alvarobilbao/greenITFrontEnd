@@ -7,10 +7,10 @@
 				<td>{{question.topic}}</td>
 				<td>{{question.subtopic}}</td><br>
 			</tr>
-			<!-- <tr *ngFor="let choice of question.choices;">
-				<input type="radio" name="{{question.id}}">
-				<label>{{choice.text}}</label> 
-			</tr>-->
 		</tbody>
 	</table>
+	<div *ngFor="let choice of question.choices;">
+				<input type="radio" name="{{question.id}}">
+				<label>{{choice.text}}</label> 
+	</div>
 </div>
