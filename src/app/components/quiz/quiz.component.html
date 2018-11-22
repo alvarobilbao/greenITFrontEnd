@@ -1,21 +1,44 @@
 <div class="questionInfo">
-	<table>
-		<tbody>
-			<tr>
-				<td>{{currentQuestion.id}}</td>
-				<td>{{currentQuestion.question}}</td>
-				<td>{{currentQuestion.topic}}</td>
-				<td>{{currentQuestion.subtopic}}</td><br>
-			</tr>
-		</tbody>
-	</table>
-	
-	<div *ngFor="let choice of currentQuestion.choices;">
-				<input type="radio" name="{{currentQuestion.id}}" [value]="choice.text" (change)="onChoiceChange(choice)">
-				<label>{{choice.text}}</label> 
-	</div>
+  <table>
+    <tbody>
+      <tr>
+        <td>{{currentQuestion.id}}</td>
+        <td>{{currentQuestion.question}}</td>
+        <td>{{currentQuestion.topic}}</td>
+        <td>{{currentQuestion.subtopic}}</td>
+        <br>
+      </tr>
+    </tbody>
+  </table>
+  <!--Single choice-->
+  <div *ngIf="currentQuestion.type === 1">
+    <div *ngFor="let choice of currentQuestion.choices;">
+      <input type="radio" name="{{currentQuestion.id}}" [value]="choice.text" (change)="onChoiceChange(choice)">
+      <label>{{choice.text}}</label>
+    </div>
+  </div>
+
+  <!-- Multichoice -->
+  <div *ngIf="currentQuestion.type === 2">
+    <div *ngFor="let choice of currentQuestion.choices;">
+      <input type="radio" name="{{currentQuestion.id}}" [value]="choice.text" (change)="onChoiceChange(choice)">
+      <label>{{choice.text}}</label>
+    </div>
+  </div>
+
 </div>
-<div>
-	<!-- How to retrieve the selected choice-->
-	<button (click)="nextQuestion(answer)">Next</button>
+<!-- Single choice + textfield -->
+<div *ngIf="currentQuestion.type === 3">
+  <div *ngFor="let choice of currentQuestion.choices;">
+    <input type="radio" name="{{currentQuestion.id}}" [value]="choice.text" (change)="onChoiceChange(choice)">
+    <label>{{choice.text}}</label>
+  </div>
+  <input #field (keyup)="onTextFieldChange(field)>
 </div>
+<!-- Textfield -->
+<div *ngIf="currentQuestion.type === 4">
+  <input #field (keyup)="onTextFieldChange(field)">
+</div>
+
+<!-- How to retrieve the selected choice-->
+<button (click)="nextQuestion()">Next</button>

@@ -14,6 +14,7 @@ export class QuizComponent implements OnInit {
   currentQuestionId: number;
   currentQuestionIndex: number;
   answer: string;
+  textFieldAnswer: string;
   constructor(private questionService: JsonquestionService) { }
 
   ngOnInit() {
@@ -47,5 +48,10 @@ export class QuizComponent implements OnInit {
   onChoiceChange(choice) {
     this.answer = choice;
     console.log('choice', choice);
+  }
+
+  onTextFieldChange(field) {
+    // console.log(field.value);
+    this.textFieldAnswer = field.value;
   }
 }
