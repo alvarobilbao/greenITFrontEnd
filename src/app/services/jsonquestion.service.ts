@@ -7,7 +7,7 @@ export class JsonquestionService {
   constructor(private http: HttpClient) { }
 
   public getQuestions() {
-    return this.http.get<any>('./assets/data/questions.json')
+    return this.http.get<any>('./assets/data/data.json');
   }
 
 }

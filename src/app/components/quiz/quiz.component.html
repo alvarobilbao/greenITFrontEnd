@@ -1,3 +1,16 @@
-<p>
-  quiz works!
-</p>
+<div *ngFor="let question of questions; let i = index">
+	<table>
+		<tbody>
+			<tr>
+				<td>{{question.id}}</td>
+				<td>{{question.question}}</td>
+				<td>{{question.topic}}</td>
+				<td>{{question.subtopic}}</td><br>
+			</tr>
+			<!-- <tr *ngFor="let choice of question.choices;">
+				<input type="radio" name="{{question.id}}">
+				<label>{{choice.text}}</label> 
+			</tr>-->
+		</tbody>
+	</table>
+</div>
