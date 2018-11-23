@@ -47,6 +47,9 @@
   </div>
 
   <!-- How to retrieve the selected choice-->
-  <button class="btn btn-lg btn-primary center-block" (click)="nextQuestion()">Next</button>
-  <button class="btn btn-lg btn-primary center-block" (click)="saveQuestionnaire()">Save</button>
-  <button *ngIf="currentQuestion.id === 88" class="btn btn-lg btn-primary center-block" (click)="submit()">Submit</button>
+  <div class="row">
+    <button class="btn btn-lg btn-primary center-block" (click)="nextQuestion()">Next</button>
+  </div>
+  <button style="margin: 10px" class="btn btn-lg btn-primary pull-right" (click)="saveQuestionnaire()">Save</button>
+  <button style="margin: 10px" *ngIf="currentQuestion.id === 88" class="btn btn-lg btn-primary pull-right" (click)="submit()">Submit</button>
+</div>
