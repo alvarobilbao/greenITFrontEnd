@@ -26,8 +26,8 @@
 
     <!-- Multichoice -->
     <div *ngIf="currentQuestion.type === 2">
-      <div *ngFor="let choice of currentQuestion.choices;">
-        <input type="radio" name="{{currentQuestion.id}}" [value]="choice.text" (change)="onChoiceChange(choice)">
+      <div class="form-check list-group-item d-flex justify-content-between align-items-center" *ngFor="let choice of currentQuestion.choices;">
+        <input type="checkbox" name="{{currentQuestion.id}}" [value]="choice.text" (change)="onMultipleChoiceChange(choice, $event)">
         <label>{{choice.text}}</label>
       </div>
     </div>
@@ -48,3 +48,5 @@
 
   <!-- How to retrieve the selected choice-->
   <button class="btn btn-lg btn-primary center-block" (click)="nextQuestion()">Next</button>
+  <button class="btn btn-lg btn-primary center-block" (click)="saveQuestionnaire()">Save</button>
+  <button *ngIf="currentQuestion.id === 88" class="btn btn-lg btn-primary center-block" (click)="submit()">Submit</button>

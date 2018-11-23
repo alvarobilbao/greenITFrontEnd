@@ -8,6 +8,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { JsonquestionService } from './services/jsonquestion.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from './services/api.service';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     router
   ],
-  providers: [JsonquestionService],
+  providers: [JsonquestionService,
+              ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

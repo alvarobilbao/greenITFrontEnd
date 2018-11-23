@@ -1,6 +1,7 @@
 import { Question } from '../../models/question';
 import { JsonquestionService } from '../../services/jsonquestion.service';
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-quiz',
@@ -10,12 +11,14 @@ import { Component, OnInit } from '@angular/core';
 export class QuizComponent implements OnInit {
 
   questions: Question[];
+  subquestions: Question[];
   currentQuestion: Question;
   currentQuestionId: number;
   currentQuestionIndex: number;
   answer: string;
   textFieldAnswer: string;
-  constructor(private questionService: JsonquestionService) { }
+  iterateInSubquestions: boolean;
+  constructor(private questionService: JsonquestionService, private apiService: ApiService) { }
 
   ngOnInit() {
     this.questionService.getQuestions().subscribe(data => {
@@ -27,12 +30,31 @@ export class QuizComponent implements OnInit {
     });
   }
 
-  // TODO navigate through the subquestions
   // TODO create the answers array;
   // TODO add the logic to skip questions when needed
   nextQuestion() {
     const questionId = this.currentQuestionId;
-    if (questionId === 4) {
+    if (!this.iterateInSubquestions && this.currentQuestion.subquestions && this.currentQuestion.subquestions.length > 0) {
+      this.subquestions = this.currentQuestion.subquestions;
+      this.iterateInSubquestions = true;
+      this.currentQuestionIndex = 0;
+      this.currentQuestion = this.subquestions[0];
+      return;
+    }
+
+    if (this.iterateInSubquestions) {
+      this.currentQuestionIndex++;
+      if (this.currentQuestionIndex < this.subquestions.length) {
+        this.currentQuestion = this.subquestions[this.currentQuestionIndex];
+        return;
+      } else {
+        this.iterateInSubquestions = false;
+        this.subquestions = [];
+        this.currentQuestionIndex = 0;
+        this.currentQuestionId = this.currentQuestion.id;
+      }
+    }
+    if (questionId === 4 && this.answer && this.answer['text'] === 'No') {
       this.currentQuestionId = 12;
     } else {
       this.currentQuestionId++;
@@ -53,5 +75,22 @@ export class QuizComponent implements OnInit {
   onTextFieldChange(field) {
     console.log(field.value);
     this.textFieldAnswer = field.value;
+  }
+
+  // TODO create the answer array and manipulate it
+  onMultipleChoiceChange(option, event) {
+    console.log('option', option);
+    console.log('event', event);
+  }
+
+  saveQuestionnaire() {
+    console.log('calling save api');
+    this.apiService.save([]).subscribe(data => {
+      console.log('service was called');
+    });
+  }
+
+  submit() {
+    console.log('submit api call');
   }
 }
