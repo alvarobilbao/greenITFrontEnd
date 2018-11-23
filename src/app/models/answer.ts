@@ -1,7 +1,6 @@
 export class Answer {
-  id: number;
-  id_Question: number;
-  id_Type: number;
-  content: String;
+  id_question: number;
+  id_type: number;
+  content: any;
 
 }
