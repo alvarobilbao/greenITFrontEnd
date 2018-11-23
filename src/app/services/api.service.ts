@@ -19,19 +19,16 @@ export class ApiService {
   });
 
   save(answers: Answer[]) {
-    answers = [{
+    /* answers = [{
       'ans_type': 1,
       'content': {'a_id': 1},
       'id_question': 1
-    }];
+    }]; */
     const options = {headers: {'Content-Type': 'application/json'}};
     return this.http.post<boolean>(
       API_URL + '/save/',  // Always add slash behind url, otherwise you will get 301 error
       JSON.stringify(answers),  // All the data need to be passed with header content-type as app/json.
       options
-    ).subscribe(data => {
-      alert('Here is the link you have generated: ' + API_URL + '/' + data['id']);
-      // data will be called as json when you call http://vps613446.ovh.net/get/<id>
-    });
+    );
   }
 }

@@ -2,6 +2,9 @@ import { Question } from '../../models/question';
 import { JsonquestionService } from '../../services/jsonquestion.service';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
+import { Answer } from '../../models/answer';
+
+const API_URL = 'http://vps613446.ovh.net';
 
 @Component({
   selector: 'app-quiz',
@@ -15,9 +18,11 @@ export class QuizComponent implements OnInit {
   currentQuestion: Question;
   currentQuestionId: number;
   currentQuestionIndex: number;
-  answer: string;
+  answer: any;
   textFieldAnswer: string;
+  mcAnswer: any[];
   iterateInSubquestions: boolean;
+  allAnswers: Answer[];
   constructor(private questionService: JsonquestionService, private apiService: ApiService) { }
 
   ngOnInit() {
@@ -27,6 +32,7 @@ export class QuizComponent implements OnInit {
       this.currentQuestion = this.questions[0];
       this.currentQuestionIndex = 0;
       this.currentQuestionId = 0;
+      this.allAnswers = [];
     });
   }
 
@@ -34,6 +40,7 @@ export class QuizComponent implements OnInit {
   // TODO add the logic to skip questions when needed
   nextQuestion() {
     const questionId = this.currentQuestionId;
+    this.addAnswer();
     if (!this.iterateInSubquestions && this.currentQuestion.subquestions && this.currentQuestion.subquestions.length > 0) {
       this.subquestions = this.currentQuestion.subquestions;
       this.iterateInSubquestions = true;
@@ -67,6 +74,50 @@ export class QuizComponent implements OnInit {
       }
     }
   }
+
+  addAnswer() {
+    const self = this;
+    if (this.currentQuestion.type === 1) {
+      const answer = new Answer(
+        {
+          id_question: self.currentQuestion.id,
+          ans_type: 1,
+          content: {a_id: this.answer.id}
+        }
+      );
+      this.allAnswers.push(answer);
+    }
+    if (this.currentQuestion.type === 2) {
+      const answer = new Answer(
+        {
+          id_question: self.currentQuestion.id,
+          ans_type: 2,
+          content: this.mcAnswer
+        }
+      );
+      this.allAnswers.push(answer);
+    }
+    if (this.currentQuestion.type === 3) {
+      const answer = new Answer(
+        {
+          id_question: self.currentQuestion.id,
+          ans_type: 3,
+          content: {a_id: this.answer.id, text: this.textFieldAnswer}
+        }
+      );
+      this.allAnswers.push(answer);
+    }
+    if (this.currentQuestion.type === 4) {
+      const answer = new Answer(
+        {
+          id_question: self.currentQuestion.id,
+          ans_type: 4,
+          content: this.textFieldAnswer
+        }
+      );
+      this.allAnswers.push(answer);
+    }
+  }
   onChoiceChange(choice) {
     this.answer = choice;
     console.log('choice', choice);
@@ -85,7 +136,10 @@ export class QuizComponent implements OnInit {
 
   saveQuestionnaire() {
     console.log('calling save api');
-    this.apiService.save([]);
+    this.apiService.save(this.allAnswers).subscribe(data => {
+      alert('Here is the link you have generated: ' + API_URL + '/' + data['id']);
+      // data will be called as json when you call http://vps613446.ovh.net/get/<id>
+    });
   }
 
   submit() {
