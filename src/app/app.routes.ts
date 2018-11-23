@@ -7,7 +7,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 
 const appRoutes: Routes = [
   // {path: '', component: WelcomeComponent},
-  {path: '', component: QuizComponent}
+  {path: '', component: QuizComponent},
+  {path: ':id', component: QuizComponent}
 ];
 
 

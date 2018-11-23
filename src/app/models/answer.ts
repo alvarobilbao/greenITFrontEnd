@@ -1,6 +1,6 @@
 export class Answer {
   id_question: number;
-  id_type: number;
+  ans_type: number;
   content: any;
 
 }

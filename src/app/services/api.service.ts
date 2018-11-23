@@ -1,23 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Answer } from '../models/answer';
 
 
-const API_URL = 'http://51.75.125.218:80';
+const API_URL = 'http://vps613446.ovh.net';
+// const API_URL = 'http://localhost:5000';
+
 @Injectable()
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   // TODO save real data
   // TODO call the other services
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+
   save(answers: Answer[]) {
     answers = [{
-      'id_type': 1,
+      'ans_type': 1,
       'content': {'a_id': 1},
       'id_question': 1
     }];
-    return this.http.post<boolean>(API_URL + '/save', answers);
+    const options = {headers: {'Content-Type': 'application/json'}};
+    return this.http.post<boolean>(
+      API_URL + '/save/',  // Always add slash behind url, otherwise you will get 301 error
+      JSON.stringify(answers),  // All the data need to be passed with header content-type as app/json.
+      options
+    ).subscribe(data => {
+      alert('Here is the link you have generated: ' + API_URL + '/' + data['id']);
+      // data will be called as json when you call http://vps613446.ovh.net/get/<id>
+    });
   }
-
 }

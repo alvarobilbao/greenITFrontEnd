@@ -85,9 +85,7 @@ export class QuizComponent implements OnInit {
 
   saveQuestionnaire() {
     console.log('calling save api');
-    this.apiService.save([]).subscribe(data => {
-      console.log('service was called');
-    });
+    this.apiService.save([]);
   }
 
   submit() {
