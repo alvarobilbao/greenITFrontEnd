@@ -6,8 +6,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 // import { QuizToken } from 'typescript';
 
 const appRoutes: Routes = [
-  {path: '', component: WelcomeComponent},
-  {path: 'questionnaire', component: QuizComponent}
+  // {path: '', component: WelcomeComponent},
+  {path: '', component: QuizComponent}
 ];
 
 
